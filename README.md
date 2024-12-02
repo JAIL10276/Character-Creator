@@ -47,3 +47,6 @@ VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=runem.l
 A brighter future dreamed and developed by the Penn State [HAXTheWeb](https://hax.psu.edu/) initative.
 
 Never. Stop. innovating.
+
+# Jose's Notes
+- 'npm i wired-elements' - loads wired js components
