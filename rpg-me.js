@@ -5,25 +5,37 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
-import { WiredButton } from 'wired-elements/lib/wired-button.js';
-import { WiredSlider } from 'wired-elements/lib/wired-slider.js';
+import 'wired-elements';
 /**
  * `rpg-character`
  *
  * @demo index.html
  * @element rpg-character
  */
-export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
+export class RpgMe extends DDDSuper(I18NMixin(LitElement)) {
   static get tag() {
-    return "rpg-character";
+    return "rpg-me";
   }
 
   constructor() {
     super();
     this.characterSeed = "";
     this.selectedAttribute = "";
+    this.characterBaseModel = 0;
+    this.characterAccessories = 0;
     this.characterName = "Default Name";
     this.characterSize = 100;
+    this.characterFace = 0;
+    this.characterFaceItem = 0;
+    this.characterShirt = 0;
+    this.characterHair = 0;
+    this.characterSkin = 0;
+    this.characterPants = 0;
+    this.characterHatColor = 0;
+    this.characterHat = 0;
+    this.fire = false;
+    this.walking = false;
+    this.circle = false;
     this.registerLocalization({
       context: this,
       localesPath:
@@ -38,7 +50,20 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
       ...super.properties,
       characterName: { type: String },
       characterSeed: { type: String },
+      characterAccessories: {type: Number},
+      characterShirt: {type: Number},
       characterSize: { type: Number },
+      characterFace: {type: Number},
+      characterFaceItem: {type: Number},
+      characterHair: {type: Number},
+      characterSkin: {tpe: Number},
+      characterPants: {type: Number},
+      characterHatColor: {type: Number},
+      characterHat: {type: String},
+      fire: {type: Boolean},
+      walking: {type: Boolean},
+      circle: {type: Boolean},
+
     };
   }
 
@@ -121,6 +146,18 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
     }
   }
 
+  firstUpdated() {
+    super.firstUpdated();
+    const baseCombo = this.shadowRoot.querySelector('#base');
+    const hatCombo = this.shadowRoot.querySelector('#hat');
+    if (baseCombo) baseCombo.value = this.base.toString();
+    if (hatCombo) hatCombo.value = this.hat;
+  }
+  updateTab(name){
+    const tab = document.getElementById('selection-tabs');
+    tab.selected = name;
+  }
+
   render() {
     return html`
       <!-- Left Column -->
@@ -151,6 +188,22 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
       <!-- Middle Column -->
       <div class="character-column">
         <div class="character">
+          <rpg-character
+            .accessories="${this.characterAccessories}"
+            .base="${this.characterBaseModel}"
+            .face="${this.characterFace}"
+            .faceItem="${this.characterFaceItem}"
+            .hair="${this.characterHair}"
+            .pants="${this.characterPants}"
+            .shirt="${this.characterShirt}"
+            .skin="${this.characterSkin}"
+            .hatColor="${this.characterHatColor}"
+            .hat="${this.characterHat}"
+            ?fire="${this.fire}"
+            ?walking="${this.walking}"
+            ?circle="${this.circle}"
+            height="400"
+            width="400"
           <p>Character Placeholder</p>
         </div>
         <div class="slider-section">
@@ -168,27 +221,31 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
       <!-- Right Column -->
       <div class="column tabs-section">
         <h3>Select Items:</h3>
-        <wired-tabs selected="0">
-          <wired-tab name="Hair">
-            <wired-button>Option 1</wired-button>
-            <wired-button>Option 2</wired-button>
-            <wired-button>Option 3</wired-button>
+        <wired-tabs id="selection-tabs" selected="0">
+          <wired-button onclick="updateTab('base-model')">Base Model</wired-button>
+          <wired-button onclick="updateTab('gender')">Gender</wired-button>
+          <wired-button onclick="updateTab('skin')">Skin</wired-button>
+          <wired-button onclick="updateTab('hair')">Hair</wired-button>
+          <wired-button onclick="updateTab('cosmetics')">Cosmetics</wired-button>
+          <wired-button onclick="updateTab('clothing')">Clothing</wired-button>
+          <wired-button onclick="updateTab('build')">Build</wired-button>
+          <wired-tab name="base-model">
+            <p>cards go here</p>
           </wired-tab>
-          <wired-tab name="Face">
-            <wired-button>Option A</wired-button>
-            <wired-button>Option B</wired-button>
-            <wired-button>Option C</wired-button>
+          <wired-tab name="gender">
+
           </wired-tab>
-          <wired-tab name="Body">
-            <wired-button>Thin</wired-button>
-            <wired-button>Muscular</wired-button>
-            <wired-button>Large</wired-button>
+          <wired-tab name="skin">
+
           </wired-tab>
-          <wired-tab name="Body Color">
-            <!--This contains different skin colors-->
-            <wired-button>Red</wired-button>
-            <wired-button>Blue</wired-button>
-            <wired-button>Green</wired-button>
+          <wired-tab name="cosmetics">
+
+          </wired-tab>
+          <wired-tab name="clothing">
+
+          </wired-tab>
+          <wired-tab name="build">
+
           </wired-tab>
         </wired-tabs>
       </div>
@@ -196,4 +253,4 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
   }
 }
 
-customElements.define(RpgCharacter.tag, RpgCharacter);
+customElements.define(RpgMe.tag, RpgMe);

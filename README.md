@@ -15,7 +15,7 @@ DDD + Lit web component based on OpenWC toolchain. This is intended to provide t
 - `npm run release` - this will build your code, update the version, and publish it to npm for others to use
 
 ## Working with your web component
-- edit `./rpg-character.js`
+- edit `./rpg-me.js`
 - edit your 'demo' by modifying `./index.html`
 - add dependencies using `npm install --save @whatever/repo` or editing `./package.json` directly
 - if you must reference additional non-JS files, ensure you use the `new URL('./my-file.jpg', import.meta.url).href` syntax so that it builds correctly

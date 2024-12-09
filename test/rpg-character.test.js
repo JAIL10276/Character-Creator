@@ -1,7 +1,7 @@
 import { html, fixture, expect } from '@open-wc/testing';
-import "../rpg-character.js";
+import "../rpg-me.js";
 
-describe("RpgCharacter test", () => {
+describe("RpgMe test", () => {
   let element;
   beforeEach(async () => {
     element = await fixture(html`

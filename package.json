@@ -16,8 +16,8 @@
         "url": "https://github.com/JAIL10276/rpg-me"
     },
     "type": "module",
-    "main": "rpg-character.js",
-    "module": "rpg-character.js",
+    "main": "rpg-me.js",
+    "module": "rpg-me.js",
     "scripts": {
         "start": "web-dev-server",
         "build": "rimraf public && rollup -c rollup.config.js && npm run analyze",
