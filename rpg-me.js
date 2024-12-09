@@ -154,7 +154,7 @@ export class RpgMe extends DDDSuper(I18NMixin(LitElement)) {
     if (hatCombo) hatCombo.value = this.hat;
   }
   updateTab(name){
-    const tab = document.getElementById('selection-tabs');
+    //const tab = document.getElementById('selection-tabs'); dont use
     tab.selected = name;
   }
 
