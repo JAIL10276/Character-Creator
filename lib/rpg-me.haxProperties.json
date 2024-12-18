@@ -41,7 +41,7 @@
     },
     "demoSchema": [
         {
-            "tag": "rpg-character",
+            "tag": "rpg-me",
             "properties": {
               "title": "Sample property title"
             },

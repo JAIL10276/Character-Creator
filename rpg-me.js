@@ -6,6 +6,7 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
 import 'wired-elements';
+import "@haxtheweb/rpg-character/src/rpg-character.js";
 /**
  * `rpg-character`
  *
@@ -39,7 +40,7 @@ export class RpgMe extends DDDSuper(I18NMixin(LitElement)) {
     this.registerLocalization({
       context: this,
       localesPath:
-        new URL("./locales/rpg-character.ar.json", import.meta.url).href +
+        new URL("./locales/rpg-me.ar.json", import.meta.url).href +
         "/../",
       locales: ["ar", "es", "hi", "zh"],
     });
@@ -50,19 +51,19 @@ export class RpgMe extends DDDSuper(I18NMixin(LitElement)) {
       ...super.properties,
       characterName: { type: String },
       characterSeed: { type: String },
-      characterAccessories: {type: Number},
-      characterShirt: {type: Number},
-      characterSize: { type: Number },
-      characterFace: {type: Number},
-      characterFaceItem: {type: Number},
-      characterHair: {type: Number},
-      characterSkin: {tpe: Number},
-      characterPants: {type: Number},
-      characterHatColor: {type: Number},
-      characterHat: {type: String},
-      fire: {type: Boolean},
-      walking: {type: Boolean},
-      circle: {type: Boolean},
+      characterAccessories: {type: Number, reflect: true },
+      characterShirt: {type: Number, reflect: true },
+      characterSize: { type: Number, reflect: true },
+      characterFace: {type: Number, reflect: true },
+      characterFaceItem: {type: Number, reflect: true },
+      characterHair: {type: Number, reflect: true },
+      characterSkin: {tpe: Number, reflect: true },
+      characterPants: {type: Number, reflect: true },
+      characterHatColor: {type: Number, reflect: true },
+      characterHat: {type: String, reflect: true },
+      fire: {type: Boolean, reflect: true },
+      walking: {type: Boolean, reflect: true },
+      circle: {type: Boolean, reflect: true },
 
     };
   }
@@ -136,6 +137,16 @@ export class RpgMe extends DDDSuper(I18NMixin(LitElement)) {
         gap: 8px;
         padding: 16px;
       }
+      .icons{
+        max-width: 50px;
+        max-height: 50px;
+        padding: 5px;
+      }
+      .load-icon{
+        color: white;
+        mix-blend-mode: difference;
+        filter: invert(1);
+      }
     `;
   }
 
@@ -174,10 +185,17 @@ export class RpgMe extends DDDSuper(I18NMixin(LitElement)) {
 
         <div class="button-row">
           <wired-button class="randomize-button" @click="${this.handleRandomize}">
+            <img src="./lib/RandomizeDice.png" alt="Randomize" class="icons">
             Randomize
           </wired-button>
-          <wired-button>Save Character</wired-button>
-          <wired-button>Load Character</wired-button>
+          <wired-button>
+            <img src="./lib/saveDisk.png" alt="Save" class="icons">
+            Save Character
+          </wired-button>
+          <wired-button>
+            <img src="./lib/Load.png" alt="Import" class="icons" id="load-icon">
+            Load Character
+          </wired-button>
         </div>
 
         <div>
@@ -189,6 +207,7 @@ export class RpgMe extends DDDSuper(I18NMixin(LitElement)) {
       <div class="character-column">
         <div class="character">
           <rpg-character
+            literalseed
             .accessories="${this.characterAccessories}"
             .base="${this.characterBaseModel}"
             .face="${this.characterFace}"
@@ -202,8 +221,10 @@ export class RpgMe extends DDDSuper(I18NMixin(LitElement)) {
             ?fire="${this.fire}"
             ?walking="${this.walking}"
             ?circle="${this.circle}"
-            height="400"
-            width="400"
+            style="
+                --character-size: ${this.characterSize}px;
+                --hat-color: hsl(${this.characterHatColor}, 100%, 50%);
+            "
           <p>Character Placeholder</p>
         </div>
         <div class="slider-section">
@@ -222,13 +243,13 @@ export class RpgMe extends DDDSuper(I18NMixin(LitElement)) {
       <div class="column tabs-section">
         <h3>Select Items:</h3>
         <wired-tabs id="selection-tabs" selected="0">
-          <wired-button onclick="updateTab('base-model')">Base Model</wired-button>
-          <wired-button onclick="updateTab('gender')">Gender</wired-button>
-          <wired-button onclick="updateTab('skin')">Skin</wired-button>
-          <wired-button onclick="updateTab('hair')">Hair</wired-button>
-          <wired-button onclick="updateTab('cosmetics')">Cosmetics</wired-button>
-          <wired-button onclick="updateTab('clothing')">Clothing</wired-button>
-          <wired-button onclick="updateTab('build')">Build</wired-button>
+          <wired-button @click="${(e) => this.updateTab('base')}">Base Model</wired-button>
+          <wired-button @click="${(e) => this.updateTab('gender')}">Gender</wired-button>
+          <wired-button @click="${(e) => this.updateTab('skin')}">Skin</wired-button>
+          <wired-button @click="${(e) => this.updateTab('hair')}">Hair</wired-button>
+          <wired-button @click="${(e) => this.updateTab('cosmetics')}">Cosmetics</wired-button>
+          <wired-button @click="${(e) => this.updateTab('clothing')}">Clothing</wired-button>
+          <wired-button @click="${(e) => this.updateTab('build')}">Build</wired-button>
           <wired-tab name="base-model">
             <p>cards go here</p>
           </wired-tab>
@@ -248,9 +269,15 @@ export class RpgMe extends DDDSuper(I18NMixin(LitElement)) {
 
           </wired-tab>
         </wired-tabs>
+        <wired-checkbox>Fire</wired-checkbox>
+        <wired-checkbox>Walking</wired-checkbox>
+        <wired-checkbox>Circle</wired-checkbox>
       </div>
     `;
   }
 }
 
 customElements.define(RpgMe.tag, RpgMe);
+/**
+ * Icons retrieved from Freepik - Flaticon
+ */
